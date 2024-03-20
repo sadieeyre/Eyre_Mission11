@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BookstoreContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:WaterConnection"]);
+    options.UseSqlite(builder.Configuration["ConnectionStrings:BookstoreConnection"]);
 });
 
 builder.Services.AddScoped<IBookRepository, EFBookRepository>();
@@ -31,8 +31,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("pagination", "Books/{pageNum}", new {Controller = "Home", action="Index"});
+app.MapDefaultControllerRoute();
 
 app.Run();
